@@ -6,6 +6,11 @@ export const Container = styled.div`
   padding: 0 10%;
 `
 
+export const Loading = styled.div`
+  text-align: center;
+  margin-top: 50px;
+`
+
 export const Header = styled.div`
   display: flex;
   width: 100%;
@@ -43,4 +48,9 @@ export const QuizName = styled.p`
   font-weight: bold;
   font-size: 20px;
   opacity: .8;
+`
+
+export const EmptyQuizList = styled.div`
+  text-align: center;
+  margin-top: 50px;
 `
