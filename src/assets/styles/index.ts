@@ -1,3 +1,4 @@
 import global from './global'
+import colors from './colors'
 
-export { global }
+export { global, colors }
