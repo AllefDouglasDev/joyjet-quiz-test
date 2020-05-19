@@ -1,27 +1,18 @@
-import { createStore, applyMiddleware, Store, compose } from 'redux'
+import { createStore, Store, compose } from 'redux'
 
-import { AuthState } from '../store/ducks/auth/types'
-import { ProductState } from '../store/ducks/products/types'
+import { QuizState } from '../store/ducks/quiz/types'
 
 import reducers from './ducks'
-import rootSaga from './ducks/rootSaga'
-
-const sagaMiddleware = createSagaMiddleware()
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store: Store<ApplicationState> = createStore(
   reducers,
-  composeEnhancers(
-    applyMiddleware(sagaMiddleware)
-  )
+  composeEnhancers()
 )
 
-sagaMiddleware.run(rootSaga)
-
 export interface ApplicationState {
-  auth: AuthState,
-  products: ProductState,
+  quiz: QuizState,
 }
 
 export default store
