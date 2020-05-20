@@ -4,6 +4,7 @@ import { QuizState, QuizTypes } from './types'
 
 const INITIAL_STATE: QuizState = {
   quizList: [],
+  loaded: false,
 }
 
 const quiz: Reducer<QuizState> = (state = INITIAL_STATE, action) => {
@@ -11,7 +12,7 @@ const quiz: Reducer<QuizState> = (state = INITIAL_STATE, action) => {
     case QuizTypes.RESET_QUIZ:
       return INITIAL_STATE
     case QuizTypes.SET_QUIZ_LIST:
-      return { ...state, quizList: action.payload.quizList }
+      return { ...state, quizList: action.payload.quizList, loaded: true }
     default:
       return state
   }

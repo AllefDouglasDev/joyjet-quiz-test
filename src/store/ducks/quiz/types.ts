@@ -7,6 +7,7 @@ export interface ActionsTypes {
 
 export interface QuizState {
   quizList: Quiz[];
+  loaded: boolean;
 }
 
 export enum QuizTypes {

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
-// import * as QuizStorage from '../../storage/quiz'
+import * as QuizStorage from '../../storage/quiz'
+import * as QuestionStorage from '../../storage/question'
+import * as AnswareStorage from '../../storage/answer'
 import { QuestionData } from '../../components/Question'
 import {
   Container,
@@ -13,14 +15,56 @@ import {
 } from './styles'
 
 const NewQuiz: React.FC = () => {
+  const [loading, setLoading] = useState(false)
   const [quizName, setQuizName] = useState('')
   const [questions, setQuestions] = useState([1])
   const [questionsData, setQuestionsData] = useState<QuestionData[]>([] as QuestionData[])
 
+  async function saveQuiz() {
+    const quiz = await QuizStorage.create(quizName)
+    console.log(quiz)
+    
+    saveQuestions(quiz.id)
+  }
+
+  async function saveQuestions(quizId: number) {
+    for (const questionData of questionsData) {
+      const question = await QuestionStorage.create(questionData.questionName, quizId)
+      console.log(question)
+
+      await saveAnswares(question.id, questionData)
+    }
+    setLoading(false)
+  }
+
+  async function saveAnswares(questionId: number, questionData: QuestionData) {
+    await AnswareStorage.create(
+      questionId,
+      questionData.answare1,
+      questionData.correctAnsware === 1
+    )
+    await AnswareStorage.create(
+      questionId,
+      questionData.answare2,
+      questionData.correctAnsware === 2
+    )
+    await AnswareStorage.create(
+      questionId,
+      questionData.answare3,
+      questionData.correctAnsware === 3
+    )
+    await AnswareStorage.create(
+      questionId,
+      questionData.answare4,
+      questionData.correctAnsware === 4
+    )
+  }
+
   async function handleCreate() {
-    // const quiz = await QuizStorage.create(quizName)
-    // console.log(quiz)
-    console.log(questionsData, quizName)
+    if (loading) return
+
+    setLoading(true)
+    saveQuiz()
   }
 
   function handleAddQuestion() {
@@ -78,7 +122,9 @@ const NewQuiz: React.FC = () => {
 
         <AddQuestionButton onClick={handleAddQuestion}>Add Question</AddQuestionButton>
 
-        <CreateButton onClick={handleCreate}>Create</CreateButton>
+        <CreateButton onClick={handleCreate}>
+          {!loading ? 'Create' : 'Saving...'}
+        </CreateButton>
       </Form>
     </Container>
   )

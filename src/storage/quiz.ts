@@ -1,11 +1,6 @@
 import localForage from 'localforage'
 import Quiz from '../types/quiz'
 
-/**
- * Structure
- * [Quiz] => '../types/quiz'
- */
-
 export const STORAGE_NAME = 'QuizApp@quiz'
 
 /**
