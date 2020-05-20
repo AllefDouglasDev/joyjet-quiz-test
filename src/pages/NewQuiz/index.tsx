@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
-import * as QuizStorage from '../../storage/quiz'
+// import * as QuizStorage from '../../storage/quiz'
+import { QuestionData } from '../../components/Question'
 import {
   Container,
   Title,
@@ -14,10 +15,12 @@ import {
 const NewQuiz: React.FC = () => {
   const [quizName, setQuizName] = useState('')
   const [questions, setQuestions] = useState([1])
+  const [questionsData, setQuestionsData] = useState<QuestionData[]>([] as QuestionData[])
 
   async function handleCreate() {
-    const quiz = await QuizStorage.create(quizName)
-    console.log(quiz)
+    // const quiz = await QuizStorage.create(quizName)
+    // console.log(quiz)
+    console.log(questionsData, quizName)
   }
 
   function handleAddQuestion() {
@@ -28,12 +31,30 @@ const NewQuiz: React.FC = () => {
     setQuestions(prevState => {
       return prevState.filter(questionId => questionId !== id)
     })
+
+    setQuestionsData(prevState => {
+      return prevState.filter(value => value.id !== id)
+    })
   }
 
-  function createQuestionForm() {
-    return questions.map(id => (
-      <QuestionForm key={id} id={id} onDelete={handleDeleteQuestion}/>
-    ))
+  function handleQuestionChange(data: QuestionData) {
+    setQuestionsData(prevState => {
+      let index = -1
+
+      for (let i = 0; i < prevState.length; i++) {
+        if (prevState[i].id === data.id) {
+          index = i
+        }
+      }
+
+      if (index === -1) {
+        prevState.push(data)
+      } else {
+        prevState[index] = data
+      }
+
+      return prevState
+    })
   }
 
   return (
@@ -45,7 +66,15 @@ const NewQuiz: React.FC = () => {
 
         <hr />
 
-        {createQuestionForm()}
+        {questions.map((id, index) => (
+          <QuestionForm
+            key={id}
+            id={id}
+            position={index + 1}
+            onDelete={handleDeleteQuestion}
+            onChange={handleQuestionChange}
+          />
+        ))}
 
         <AddQuestionButton onClick={handleAddQuestion}>Add Question</AddQuestionButton>
 
