@@ -20,10 +20,6 @@ export async function create(questionId: number, title: string, isCorrect: boole
   return answare
 }
 
-export async function findOne(id: number): Promise<Answare> {
-  return {} as Answare
-}
-
 /** Get all saved answares by question id */
 export async function findAllByQuestionId(questionId: number): Promise<Answare[]> {
   const answares = await findAll()

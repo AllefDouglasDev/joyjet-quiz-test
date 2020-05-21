@@ -3,12 +3,12 @@ import { FiPlusCircle } from 'react-icons/fi'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import * as QuizStorage from '../../storage/quiz'
-import * as QuestionStorage from '../../storage/question'
-import * as AnswareStorage from '../../storage/answer'
 import { ApplicationState } from '../../store'
 import { setQuizList } from '../../store/ducks/quiz/actions'
 import { QuestionData } from '../../components/QuestionForm'
+import * as QuizStorage from '../../storage/quiz'
+import * as QuestionStorage from '../../storage/question'
+import * as AnswareStorage from '../../storage/answer'
 import Quiz from '../../types/quiz'
 import Answer from '../../types/answer'
 import Question from '../../types/question'
@@ -31,16 +31,14 @@ const NewQuiz: React.FC = () => {
   const [questions, setQuestions] = useState([1])
   const [questionsData, setQuestionsData] = useState<QuestionData[]>([] as QuestionData[])
 
-  const classes = useStyles()
-
   const { quizList } = useSelector((state: ApplicationState) => state.quiz)
-
+  
   const dispatch = useDispatch()
+  const classes = useStyles()
   const history = useHistory()
 
-  async function saveQuiz(): Promise<Quiz> {
-    const quiz = await QuizStorage.create(quizName)
-    return quiz
+  function saveQuiz(): Promise<Quiz> {
+    return QuizStorage.create(quizName)
   }
 
   async function saveQuestions(quizId: number): Promise<Question[]> {
@@ -49,8 +47,7 @@ const NewQuiz: React.FC = () => {
     for (const questionData of questionsData) {
       const question = await QuestionStorage.create(questionData.questionTitle, quizId)
 
-      const answares = await saveAnswares(question.id, questionData)
-      question.answers = answares
+      question.answers = await saveAnswares(question.id, questionData)
 
       questions.push(question)
     }
@@ -105,8 +102,7 @@ const NewQuiz: React.FC = () => {
     setLoading(true)
     
     const quiz = await saveQuiz()
-    const questions = await saveQuestions(quiz.id)
-    quiz.questions = questions
+    quiz.questions = await saveQuestions(quiz.id)
 
     saveQuizOnReduxState(quiz)
 
@@ -130,18 +126,12 @@ const NewQuiz: React.FC = () => {
 
   function handleQuestionChange(data: QuestionData) {
     setQuestionsData(prevState => {
-      let index = -1
+      const questionDataIndex = prevState.findIndex(qd => qd.id === data.id)
 
-      for (let i = 0; i < prevState.length; i++) {
-        if (prevState[i].id === data.id) {
-          index = i
-        }
-      }
-
-      if (index === -1) {
+      if (questionDataIndex === -1) {
         prevState.push(data)
       } else {
-        prevState[index] = data
+        prevState[questionDataIndex] = data
       }
 
       return prevState
@@ -171,9 +161,9 @@ const NewQuiz: React.FC = () => {
           ))}
         </QuestionsContainer>
 
-        <AddQuestionButton onClick={handleAddQuestion}
-        >
+        <AddQuestionButton onClick={handleAddQuestion}>
           <FiPlusCircle color='white' size={24} />
+          
           <span>Add Question</span>
         </AddQuestionButton>
 

@@ -63,11 +63,8 @@ const QuestionForm: React.FC<Props> = ({ id, position, onDelete, onChange }) => 
     <Container className={classes.root} key={id}>
       <Header>
         <Title>Question {position}</Title>
-        <DeleteButton
-          onClick={handleDelete}
-        >
-          Delete
-        </DeleteButton>
+        
+        <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
       </Header>
 
       <Input

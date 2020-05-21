@@ -20,10 +20,6 @@ export async function create(title: string, quizId: number): Promise<Question> {
   return question
 }
 
-export async function findOne(id: number): Promise<Question> {
-  return {} as Question
-}
-
 /** Get all saved questions by quiz id */
 export async function findAllByQuizId(quizId: number): Promise<Question[]> {
   const questions = await findAll()

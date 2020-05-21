@@ -20,10 +20,6 @@ export async function create(name: string): Promise<Quiz> {
   return quiz
 }
 
-export async function findOne(id: number): Promise<Quiz> {
-  return {} as Quiz
-}
-
 /** Get all saved quizzes */
 export async function findAll(): Promise<Quiz[]> {
   const result = await localForage.getItem(STORAGE_NAME)

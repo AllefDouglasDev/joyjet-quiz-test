@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { MdQuestionAnswer } from 'react-icons/md'
 
 import Question from '../../types/question'
+import Answer from '../../types/answer'
 import {
   Container,
   Header,
@@ -11,7 +12,6 @@ import {
   RadioButton,
   AnswareText,
 } from './styles'
-import Answer from '../../types/answer'
 
 export interface Props {
   question: Question;
@@ -29,12 +29,11 @@ const QuestionCard: React.FC<Props> = ({ question, onChange, showAnswares = fals
   }
 
   function getColor(answare: Answer): string {
-    if (checkedAnsware === answare.id && answare.isCorrect)
+    if ((checkedAnsware === answare.id && answare.isCorrect) ||
+      (checkedAnsware !== answare.id && answare.isCorrect))
       return 'green'
     if (checkedAnsware === answare.id && !answare.isCorrect)
       return 'red'
-    if (checkedAnsware !== answare.id && answare.isCorrect)
-      return 'green'
 
     return 'black'
   }
@@ -42,7 +41,7 @@ const QuestionCard: React.FC<Props> = ({ question, onChange, showAnswares = fals
   return (
     <Container>
       <Header>
-        <MdQuestionAnswer color='#FFF' size={24} />
+        <MdQuestionAnswer color='white' size={24} />
         
         <QuestionTitle>{question.title}</QuestionTitle>
       </Header>

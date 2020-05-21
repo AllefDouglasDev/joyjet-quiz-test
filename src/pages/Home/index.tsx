@@ -60,7 +60,6 @@ const Home: React.FC = () => {
           <FcTemplate  color={colors.primary} size={150}/>
         </EmptyQuizList>
       )}
-
     </Container>
   )
 }
