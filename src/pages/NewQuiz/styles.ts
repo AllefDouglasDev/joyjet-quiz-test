@@ -34,7 +34,7 @@ export const CreateButton = styled.a`
   color: white;
   text-align: center;
   cursor: pointer;
-  margin-top: 50px;
+  margin: 50px 0;
 `
 
 export const QuestionForm = styled(Question)``

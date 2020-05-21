@@ -29,10 +29,11 @@ const Quiz: React.FC = () => {
   return (
     <Container>
       {loading && <div>carregando...</div> }
-      {!loading && (
+      {!loading && quizData !== null && (
         <>
-          <Title>Quiz works</Title>
-          <Title>{quizData === null ? 'É nulo' : JSON.stringify(quizData)}</Title>
+          <Title>{quizData.name} Quiz</Title>
+
+          
         </>
       )}
     </Container>

@@ -4,6 +4,7 @@ import * as QuizStorage from '../../storage/quiz'
 import * as QuestionStorage from '../../storage/question'
 import * as AnswareStorage from '../../storage/answer'
 import { QuestionData } from '../../components/Question'
+import validate from './validate'
 import {
   Container,
   Title,
@@ -22,15 +23,13 @@ const NewQuiz: React.FC = () => {
 
   async function saveQuiz() {
     const quiz = await QuizStorage.create(quizName)
-    console.log(quiz)
     
     saveQuestions(quiz.id)
   }
 
   async function saveQuestions(quizId: number) {
     for (const questionData of questionsData) {
-      const question = await QuestionStorage.create(questionData.questionName, quizId)
-      console.log(question)
+      const question = await QuestionStorage.create(questionData.questionTitle, quizId)
 
       await saveAnswares(question.id, questionData)
     }
@@ -62,6 +61,17 @@ const NewQuiz: React.FC = () => {
 
   async function handleCreate() {
     if (loading) return
+
+    const errors = validate(quizName, questionsData)
+
+    if (errors) {
+      if (errors.quizName)
+        alert(errors.quizName)
+      if (errors.questionsData)
+        alert(errors.questionsData)
+
+      return
+    }
 
     setLoading(true)
     saveQuiz()

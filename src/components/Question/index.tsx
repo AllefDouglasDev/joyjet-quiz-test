@@ -14,7 +14,7 @@ import {
 
 export interface QuestionData {
   id: number;
-  questionName: string;
+  questionTitle: string;
   answare1: string;
   answare2: string;
   answare3: string;
@@ -30,7 +30,7 @@ export interface Props {
 }
 
 const Question: React.FC<Props> = ({ id, position, onDelete, onChange }) => {
-  const [questionName, setQuestionName] = useState('')
+  const [questionTitle, setQuestionTitle] = useState('')
   const [answare1, setAnsware1] = useState('')
   const [answare2, setAnsware2] = useState('')
   const [answare3, setAnsware3] = useState('')
@@ -41,7 +41,7 @@ const Question: React.FC<Props> = ({ id, position, onDelete, onChange }) => {
     if (onChange) {
       onChange({
         id,
-        questionName,
+        questionTitle,
         answare1,
         answare2,
         answare3,
@@ -49,7 +49,7 @@ const Question: React.FC<Props> = ({ id, position, onDelete, onChange }) => {
         correctAnsware,
       })
     }
-  }, [id, questionName, answare1, answare2, answare3, answare4, correctAnsware, onChange])
+  }, [id, questionTitle, answare1, answare2, answare3, answare4, correctAnsware, onChange])
 
   function handleDelete() {
     if (onDelete) onDelete(id)
@@ -62,7 +62,7 @@ const Question: React.FC<Props> = ({ id, position, onDelete, onChange }) => {
         <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
       </Header>
 
-      <Input placeholder='Question name' value={questionName} onChange={e => setQuestionName(e.target.value)}/>
+      <Input placeholder='Question title' value={questionTitle} onChange={e => setQuestionTitle(e.target.value)}/>
       
       <AnswersContainer>
         <AnswerItem>
