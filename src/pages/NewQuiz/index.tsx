@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
 import * as QuizStorage from '../../storage/quiz'
 import * as QuestionStorage from '../../storage/question'
 import * as AnswareStorage from '../../storage/answer'
+import { ApplicationState } from '../../store'
+import { setQuizList } from '../../store/ducks/quiz/actions'
 import { QuestionData } from '../../components/QuestionForm'
 import Quiz from '../../types/quiz'
+import Answer from '../../types/answer'
+import Question from '../../types/question'
 import validate from './validate'
 import {
   Container,
@@ -23,6 +28,9 @@ const NewQuiz: React.FC = () => {
   const [questions, setQuestions] = useState([1])
   const [questionsData, setQuestionsData] = useState<QuestionData[]>([] as QuestionData[])
 
+  const { quizList } = useSelector((state: ApplicationState) => state.quiz)
+
+  const dispatch = useDispatch()
   const history = useHistory()
 
   async function saveQuiz(): Promise<Quiz> {
@@ -30,35 +38,49 @@ const NewQuiz: React.FC = () => {
     return quiz
   }
 
-  async function saveQuestions(quizId: number): Promise<void> {
+  async function saveQuestions(quizId: number): Promise<Question[]> {
+    const questions: Question[] = []
+
     for (const questionData of questionsData) {
       const question = await QuestionStorage.create(questionData.questionTitle, quizId)
 
-      await saveAnswares(question.id, questionData)
+      const answares = await saveAnswares(question.id, questionData)
+      question.answers = answares
+
+      questions.push(question)
     }
+
+    return questions
   }
 
-  async function saveAnswares(questionId: number, questionData: QuestionData): Promise<void> {
-    await AnswareStorage.create(
+  async function saveAnswares(questionId: number, questionData: QuestionData): Promise<Answer[]> {
+    const answare1 = await AnswareStorage.create(
       questionId,
       questionData.answare1,
       questionData.correctAnsware === 1
     )
-    await AnswareStorage.create(
+    const answare2 = await AnswareStorage.create(
       questionId,
       questionData.answare2,
       questionData.correctAnsware === 2
     )
-    await AnswareStorage.create(
+    const answare3 = await AnswareStorage.create(
       questionId,
       questionData.answare3,
       questionData.correctAnsware === 3
     )
-    await AnswareStorage.create(
+    const answare4 = await AnswareStorage.create(
       questionId,
       questionData.answare4,
       questionData.correctAnsware === 4
     )
+
+    return [answare1, answare2, answare3, answare4]
+  }
+
+  function saveQuizOnReduxState(quiz: Quiz) {
+    quizList.push(quiz)
+    dispatch(setQuizList(quizList))
   }
 
   async function handleCreate() {
@@ -78,10 +100,12 @@ const NewQuiz: React.FC = () => {
     setLoading(true)
     
     const quiz = await saveQuiz()
-    await saveQuestions(quiz.id)
-    
-    setLoading(false)
+    const questions = await saveQuestions(quiz.id)
+    quiz.questions = questions
 
+    saveQuizOnReduxState(quiz)
+
+    setLoading(false)
     history.push('/')
   }
 

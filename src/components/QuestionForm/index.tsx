@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import {
+  useStyles,
   Container,
   Header,
   Title,
@@ -10,6 +11,7 @@ import {
   AnswerItem,
   RadioButton,
   AnswerInput,
+  AnswersTitle,
 } from './styles'
 
 export interface QuestionData {
@@ -37,6 +39,8 @@ const QuestionForm: React.FC<Props> = ({ id, position, onDelete, onChange }) => 
   const [answare4, setAnsware4] = useState('')
   const [correctAnsware, setCorrectAnsware] = useState(1)
 
+  const classes = useStyles()
+
   useEffect(() => {
     if (onChange) {
       onChange({
@@ -56,15 +60,28 @@ const QuestionForm: React.FC<Props> = ({ id, position, onDelete, onChange }) => 
   }
 
   return (
-    <Container key={id}>
+    <Container className={classes.root} key={id}>
       <Header>
         <Title>Question {position}</Title>
-        <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
+        <DeleteButton
+          color='secondary'
+          onClick={handleDelete}
+          variant='contained'
+        >
+          Delete
+        </DeleteButton>
       </Header>
 
-      <Input placeholder='Question title' value={questionTitle} onChange={e => setQuestionTitle(e.target.value)}/>
+      <Input
+        placeholder='Question title'
+        value={questionTitle}
+        onChange={e => setQuestionTitle(e.target.value)}
+        variant='outlined'
+      />
       
       <AnswersContainer>
+        <AnswersTitle>Inform the answares for this question</AnswersTitle>
+
         <AnswerItem>
           <RadioButton
             name={`answer-${id}`}
@@ -76,6 +93,7 @@ const QuestionForm: React.FC<Props> = ({ id, position, onDelete, onChange }) => 
             placeholder='First Answer'
             value={answare1}
             onChange={e => setAnsware1(e.target.value)}
+            variant='outlined'
           />
         </AnswerItem>
 
@@ -90,6 +108,7 @@ const QuestionForm: React.FC<Props> = ({ id, position, onDelete, onChange }) => 
             placeholder='Second Answer'
             value={answare2}
             onChange={e => setAnsware2(e.target.value)}
+            variant='outlined'
           />
         </AnswerItem>
 
@@ -104,6 +123,7 @@ const QuestionForm: React.FC<Props> = ({ id, position, onDelete, onChange }) => 
             placeholder='Third Answer'
             value={answare3}
             onChange={e => setAnsware3(e.target.value)}
+            variant='outlined'
           />
         </AnswerItem>
         <AnswerItem>
@@ -117,6 +137,7 @@ const QuestionForm: React.FC<Props> = ({ id, position, onDelete, onChange }) => 
             placeholder='Fourth Answer'
             value={answare4}
             onChange={e => setAnsware4(e.target.value)}
+            variant='outlined'
           />
         </AnswerItem>
       </AnswersContainer>

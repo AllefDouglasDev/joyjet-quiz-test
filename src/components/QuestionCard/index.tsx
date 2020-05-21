@@ -54,9 +54,12 @@ const QuestionCard: React.FC<Props> = ({ question, onChange, showAnswares = fals
               name={`answare-${question.id}`}
               value={answare.id}
               onChange={e => handleRadio(Number(e.target.value))}
+              disabled={showAnswares}
             />
 
-            <AnswareText color={showAnswares ? getColor(answare) : 'black'}>{answare.title}</AnswareText>
+            <AnswareText color={showAnswares ? getColor(answare) : 'black'}>
+              {answare.title}
+            </AnswareText>
           </AnswareItem>
         ))}
       </AnswaresContainer>

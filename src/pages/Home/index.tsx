@@ -1,5 +1,6 @@
 import React from 'react'
 import { MdQuestionAnswer } from 'react-icons/md'
+import { FcTemplate } from 'react-icons/fc'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
@@ -54,7 +55,10 @@ const Home: React.FC = () => {
       )}
 
       {!loading && quizList.length <= 0 && (
-        <EmptyQuizList>You don't have any quiz</EmptyQuizList>
+        <EmptyQuizList>
+          You don't have any quiz
+          <FcTemplate  color={colors.primary} size={150}/>
+        </EmptyQuizList>
       )}
 
     </Container>

@@ -51,6 +51,11 @@ export const QuizName = styled.p`
 `
 
 export const EmptyQuizList = styled.div`
-  text-align: center;
-  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150px;
+  font-weight: bold;
+  font-size: 25px;
+  opacity: .6;
 `
