@@ -29,7 +29,7 @@ export interface Props {
   onChange?: (data: QuestionData) => void;
 }
 
-const Question: React.FC<Props> = ({ id, position, onDelete, onChange }) => {
+const QuestionForm: React.FC<Props> = ({ id, position, onDelete, onChange }) => {
   const [questionTitle, setQuestionTitle] = useState('')
   const [answare1, setAnsware1] = useState('')
   const [answare2, setAnsware2] = useState('')
@@ -124,4 +124,4 @@ const Question: React.FC<Props> = ({ id, position, onDelete, onChange }) => {
   )
 }
 
-export default Question
+export default QuestionForm

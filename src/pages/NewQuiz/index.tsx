@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import * as QuizStorage from '../../storage/quiz'
 import * as QuestionStorage from '../../storage/question'
 import * as AnswareStorage from '../../storage/answer'
-import { QuestionData } from '../../components/Question'
+import { QuestionData } from '../../components/QuestionForm'
 import Quiz from '../../types/quiz'
 import validate from './validate'
 import {

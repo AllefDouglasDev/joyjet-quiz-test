@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { colors } from '../../assets/styles'
 
-import { Question } from '../../components'
+import { QuestionForm as QuestionFormC } from '../../components'
 
 export const Container = styled.div`
   padding: 0 10%;
@@ -37,4 +37,4 @@ export const CreateButton = styled.a`
   margin: 50px 0;
 `
 
-export const QuestionForm = styled(Question)``
+export const QuestionForm = styled(QuestionFormC)``

@@ -1,4 +1,4 @@
-import { QuestionData } from '../../components/Question'
+import { QuestionData } from '../../components/QuestionForm'
 
 export interface ErrorFields {
   quizName?: string;

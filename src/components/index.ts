@@ -1,5 +1,7 @@
-import Question from './Question'
+import QuestionForm from './QuestionForm'
+import QuestionCard from './QuestionCard'
 
 export {
-  Question,
+  QuestionForm,
+  QuestionCard,
 }

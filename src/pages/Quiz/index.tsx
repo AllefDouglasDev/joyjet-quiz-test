@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { MdQuestionAnswer } from 'react-icons/md'
 
 import { ApplicationState } from '../../store'
 import QuizModel from '../../types/quiz'
@@ -11,18 +10,19 @@ import {
   Title,
   QuestionsContainer,
   QuestionCard,
-  QuestionTitle,
-  AnswaresContainer,
-  AnswareItem,
-  RadioButton,
-  AnswareText,
-  QuestionCardHeader,
   ConfirmButton,
 } from './styles'
+
+interface AnswareChoice {
+  answareId: number;
+  questionId: number;
+}
 
 const Quiz: React.FC = () => {
   const { id } = useParams()
   const [quizData, setQuizData] = useState<QuizModel | null>(null)
+  const [answareChoices, setAnswareChoices] = useState<AnswareChoice[]>([])
+  const [checkedAnswares, setCheckedAnswares] = useState(false)
 
   const { loading } = useLoadQuizList()
 
@@ -36,8 +36,35 @@ const Quiz: React.FC = () => {
       }
   }, [id, quizList])
 
+  function handleAnswareChange(answareId: number, questionId: number) {
+    setAnswareChoices(prevState => {
+      const answareChoice = prevState.find(ac => ac.questionId === questionId)
+
+      if (!answareChoice) {
+        prevState.push({ answareId, questionId })
+      } else {
+        answareChoice.answareId = answareId
+      }
+
+      return prevState
+    })
+  }
+
   function handleConfirm() {
-    console.log('Confirmated')
+    if (checkedAnswares) {
+      setCheckedAnswares(false)
+      return
+    }
+    if (!quizData) return
+
+    const questionsLength = Number(quizData?.questions?.length)
+
+    if (answareChoices.length < questionsLength) {
+      alert('All questions must be answered')
+      return
+    }
+
+    setCheckedAnswares(true)
   }
 
   return (
@@ -50,29 +77,18 @@ const Quiz: React.FC = () => {
 
           <QuestionsContainer>
             {quizData.questions?.map(question => (
-              <QuestionCard key={question.id}>
-                <QuestionCardHeader>
-                  <MdQuestionAnswer color='#FFF' size={24} />
-                  
-                  <QuestionTitle>{question.title}</QuestionTitle>
-                </QuestionCardHeader>
-
-                <AnswaresContainer>
-                  {question.answers?.map((answare, index) => (
-                    <AnswareItem key={index}>
-                      <RadioButton
-                        name={`answare-${question.id}`}
-                        value={index + 1}
-                      />
-                      <AnswareText>{answare.title}</AnswareText>
-                    </AnswareItem>
-                  ))}
-                </AnswaresContainer>
-              </QuestionCard>
+              <QuestionCard
+                key={question.id}
+                question={question}
+                onChange={handleAnswareChange}
+                showAnswares={checkedAnswares}
+              />
             ))}
           </QuestionsContainer>
 
-          <ConfirmButton onClick={handleConfirm}>Confirm</ConfirmButton>
+          <ConfirmButton onClick={handleConfirm}>
+            {checkedAnswares ? 'Hide Response' : 'Confirm'}
+          </ConfirmButton>
         </>
       )}
     </Container>

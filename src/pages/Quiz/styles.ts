@@ -1,5 +1,7 @@
 import styled from 'styled-components'
+
 import { colors } from '../../assets/styles'
+import { QuestionCard as QuestionCardC } from '../../components'
 
 export const Container = styled.div`
   padding: 0 10%;
@@ -12,40 +14,7 @@ export const Title = styled.h1`
 
 export const QuestionsContainer = styled.div``
 
-export const QuestionCard = styled.div`
-  margin-bottom: 50px;
-`
-
-export const QuestionCardHeader = styled.div`
-  display: flex;
-  background-color: ${colors.primary};
-  padding: 10px 20px;
-  align-items: center;
-`
-
-export const QuestionTitle = styled.div`
-  color: white;
-  font-weight: bold;
-  margin-left: 10px;
-`
-
-export const AnswaresContainer = styled.div``
-
-export const AnswareItem = styled.div`
-  display: flex;
-  padding: 10px 20px;
-  border-bottom: 1px solid ${colors.primary};
-  background-color: ${({ color }) => color ? color : 'white'};
-`
-
-export const RadioButton = styled.input.attrs({ type: 'radio' })`
-  margin-right: 16px;
-`
-
-export const AnswareText = styled.div`
-  font-weight: bold;
-  color: ${({ color }) => color ? color : 'black'};
-`
+export const QuestionCard = styled(QuestionCardC)``
 
 export const ConfirmButton = styled.a`
   padding: 10px 20px;
