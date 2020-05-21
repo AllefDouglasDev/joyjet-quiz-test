@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { FiPlusCircle } from 'react-icons/fi'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -13,12 +14,14 @@ import Answer from '../../types/answer'
 import Question from '../../types/question'
 import validate from './validate'
 import {
+  useStyles,
   Container,
   Title,
   Input,
   Form,
   CreateButton,
   AddQuestionButton,
+  QuestionsContainer,
   QuestionForm,
 } from './styles'
 
@@ -27,6 +30,8 @@ const NewQuiz: React.FC = () => {
   const [quizName, setQuizName] = useState('')
   const [questions, setQuestions] = useState([1])
   const [questionsData, setQuestionsData] = useState<QuestionData[]>([] as QuestionData[])
+
+  const classes = useStyles()
 
   const { quizList } = useSelector((state: ApplicationState) => state.quiz)
 
@@ -144,25 +149,33 @@ const NewQuiz: React.FC = () => {
   }
 
   return (
-    <Container>
+    <Container className={classes.root}>
       <Title>Create a new quiz</Title>
 
       <Form>
-        <Input placeholder='Quiz name?' onChange={e => setQuizName(e.target.value)} />
+        <Input
+          label='Quiz name'
+          variant='outlined'
+          onChange={e => setQuizName(e.target.value)}
+        />
 
-        <hr />
+        <QuestionsContainer>
+          {questions.map((id, index) => (
+            <QuestionForm
+              key={id}
+              id={id}
+              position={index + 1}
+              onDelete={handleDeleteQuestion}
+              onChange={handleQuestionChange}
+            />
+          ))}
+        </QuestionsContainer>
 
-        {questions.map((id, index) => (
-          <QuestionForm
-            key={id}
-            id={id}
-            position={index + 1}
-            onDelete={handleDeleteQuestion}
-            onChange={handleQuestionChange}
-          />
-        ))}
-
-        <AddQuestionButton onClick={handleAddQuestion}>Add Question</AddQuestionButton>
+        <AddQuestionButton onClick={handleAddQuestion}
+        >
+          <FiPlusCircle color='white' size={24} />
+          <span>Add Question</span>
+        </AddQuestionButton>
 
         <CreateButton onClick={handleCreate}>
           {!loading ? 'Create' : 'Saving...'}

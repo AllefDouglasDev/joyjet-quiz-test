@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { makeStyles } from '@material-ui/core/styles'
-import { TextField, Button } from '@material-ui/core'
+import { TextField } from '@material-ui/core'
 
 import { colors } from '../../assets/styles'
 
@@ -19,8 +19,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: 20px 0px;
-  padding: 10px;
+  padding: 16px 32px;
   border: 1px solid ${colors.primary};
+  border-radius: 8px;
 `
 
 export const Header = styled.div`
@@ -34,7 +35,14 @@ export const Title = styled.span`
   font-size: 22px;
 `
 
-export const DeleteButton = styled(Button)``
+export const DeleteButton = styled.a`
+  padding: 10px 20px;
+  background-color: red;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px;
+`
 
 export const Input = styled(TextField)``
 

@@ -64,16 +64,14 @@ const QuestionForm: React.FC<Props> = ({ id, position, onDelete, onChange }) => 
       <Header>
         <Title>Question {position}</Title>
         <DeleteButton
-          color='secondary'
           onClick={handleDelete}
-          variant='contained'
         >
           Delete
         </DeleteButton>
       </Header>
 
       <Input
-        placeholder='Question title'
+        label='Question title'
         value={questionTitle}
         onChange={e => setQuestionTitle(e.target.value)}
         variant='outlined'
@@ -90,7 +88,7 @@ const QuestionForm: React.FC<Props> = ({ id, position, onDelete, onChange }) => 
             onChange={e => setCorrectAnsware(Number(e.target.value))}
           /> 
           <AnswerInput
-            placeholder='First Answer'
+            label='First Answer'
             value={answare1}
             onChange={e => setAnsware1(e.target.value)}
             variant='outlined'
@@ -105,7 +103,7 @@ const QuestionForm: React.FC<Props> = ({ id, position, onDelete, onChange }) => 
             onChange={e => setCorrectAnsware(Number(e.target.value))}
           />  
           <AnswerInput
-            placeholder='Second Answer'
+            label='Second Answer'
             value={answare2}
             onChange={e => setAnsware2(e.target.value)}
             variant='outlined'
@@ -120,7 +118,7 @@ const QuestionForm: React.FC<Props> = ({ id, position, onDelete, onChange }) => 
             onChange={e => setCorrectAnsware(Number(e.target.value))}
           />  
           <AnswerInput
-            placeholder='Third Answer'
+            label='Third Answer'
             value={answare3}
             onChange={e => setAnsware3(e.target.value)}
             variant='outlined'
@@ -134,7 +132,7 @@ const QuestionForm: React.FC<Props> = ({ id, position, onDelete, onChange }) => 
             onChange={e => setCorrectAnsware(Number(e.target.value))}
           />  
           <AnswerInput
-            placeholder='Fourth Answer'
+            label='Fourth Answer'
             value={answare4}
             onChange={e => setAnsware4(e.target.value)}
             variant='outlined'

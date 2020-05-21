@@ -26,6 +26,7 @@ export const AddQuizButton = styled.a`
   color: white;
   font-weight: bold;
   font-size: 20px;
+  border-radius: 5px;
   cursor: pointer;
 `
 
@@ -39,6 +40,7 @@ export const QuizItem = styled.a`
   align-items: center;
   margin-bottom: 20px;
   padding: 10px 20px;
+  border-radius: 5px;
   border: 1px solid ${colors.primary};
   cursor: pointer;
 `

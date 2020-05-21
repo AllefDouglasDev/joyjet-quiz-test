@@ -29,6 +29,9 @@ export const AnswareItem = styled.div`
 
 export const RadioButton = styled.input.attrs({ type: 'radio' })`
   margin-right: 16px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
 `
 
 export const AnswareText = styled.div`

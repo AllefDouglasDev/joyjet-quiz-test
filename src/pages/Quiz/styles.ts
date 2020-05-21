@@ -23,5 +23,6 @@ export const ConfirmButton = styled.a`
   text-align: center;
   font-weight: bold;
   cursor: pointer;
+  border-radius: 5px;
   margin: 50px 0;
 `
