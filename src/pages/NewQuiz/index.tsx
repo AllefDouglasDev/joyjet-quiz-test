@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import * as QuizStorage from '../../storage/quiz'
 import * as QuestionStorage from '../../storage/question'
 import * as AnswareStorage from '../../storage/answer'
 import { QuestionData } from '../../components/Question'
+import Quiz from '../../types/quiz'
 import validate from './validate'
 import {
   Container,
@@ -21,22 +23,22 @@ const NewQuiz: React.FC = () => {
   const [questions, setQuestions] = useState([1])
   const [questionsData, setQuestionsData] = useState<QuestionData[]>([] as QuestionData[])
 
-  async function saveQuiz() {
+  const history = useHistory()
+
+  async function saveQuiz(): Promise<Quiz> {
     const quiz = await QuizStorage.create(quizName)
-    
-    saveQuestions(quiz.id)
+    return quiz
   }
 
-  async function saveQuestions(quizId: number) {
+  async function saveQuestions(quizId: number): Promise<void> {
     for (const questionData of questionsData) {
       const question = await QuestionStorage.create(questionData.questionTitle, quizId)
 
       await saveAnswares(question.id, questionData)
     }
-    setLoading(false)
   }
 
-  async function saveAnswares(questionId: number, questionData: QuestionData) {
+  async function saveAnswares(questionId: number, questionData: QuestionData): Promise<void> {
     await AnswareStorage.create(
       questionId,
       questionData.answare1,
@@ -74,7 +76,13 @@ const NewQuiz: React.FC = () => {
     }
 
     setLoading(true)
-    saveQuiz()
+    
+    const quiz = await saveQuiz()
+    await saveQuestions(quiz.id)
+    
+    setLoading(false)
+
+    history.push('/')
   }
 
   function handleAddQuestion() {
