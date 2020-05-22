@@ -1,7 +1,5 @@
 # Joyjet Test
 
-![Joyjet](https://joyjet.com/images/joyjet_logotag-rocket.svg)
-
 This test is the challenge of Front-End Developer
 
 ## 📖 Libraries Used
